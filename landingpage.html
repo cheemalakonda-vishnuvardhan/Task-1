@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DataVedhi | Vishnu Vardhan</title>
+  <style>
+    :root {
+      --text-color: #e0e0e0;
+      --bg-color: #0a0a0a;
+      --highlight: #00ff95;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Lucida Sans', 'Lucida Grande', 'Lucida Console', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      overflow: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 2px solid var(--highlight);
+      box-shadow: 0 0 15px var(--highlight);
+    }
+    nav h1 {
+      font-size: 1.8rem;
+      margin: 0;
+      background: linear-gradient(90deg, #00ff95, #00e5ff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
+    }
+    .toggle-btn {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-size: 1.5rem;
+      color: var(--highlight);
+      transition: transform 0.3s;
+    }
+    .toggle-btn:hover {
+      transform: rotate(20deg);
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 90vh;
+      text-align: center;
+      padding: 2rem;
+      z-index: 2;
+      border: 3px solid var(--highlight);
+      border-radius: 15px;
+      max-width: 800px;
+      margin: 5vh auto;
+      box-shadow: 0 0 25px var(--highlight), inset 0 0 15px var(--highlight);
+      animation: pulseBorder 2s infinite alternate;
+      background: rgba(0,0,0,0.7);
+    }
+    .hero h2 {
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+      font-family: 'Lucida Sans', sans-serif;
+      background: linear-gradient(90deg, #00ff95, #00e5ff, #ff00ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glow 3s infinite alternate;
+    }
+    .hero h3 {
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin: 0.3rem 0;
+      color: var(--highlight);
+    }
+    .hero p {
+      max-width: 600px;
+      line-height: 1.6;
+      font-size: 1rem;
+    }
+
+    /* Border animation */
+    @keyframes pulseBorder {
+      from { box-shadow: 0 0 15px var(--highlight), inset 0 0 5px var(--highlight); }
+      to { box-shadow: 0 0 40px var(--highlight), inset 0 0 20px var(--highlight); }
+    }
+
+    /* Text Glow */
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #00ff95, 0 0 20px #00e5ff; }
+      to { text-shadow: 0 0 20px #ff00ff, 0 0 40px #00e5ff; }
+    }
+
+    /* Matrix Background */
+    canvas#matrix {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h2 { font-size: 2rem; }
+      .hero h3 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Matrix Background -->
+  <canvas id="matrix"></canvas>
+
+  <!-- Navbar -->
+  <nav>
+    <h1>DataVedhi</h1>
+    <button class="toggle-btn" id="themeToggle">🌙</button>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Hello, I'm Vishnu Vardhan</h2>
+    <h3>🚀 Frontend Developer | Creative Thinker</h3>
+    <p>
+      Passionate about building interactive, modern, and responsive websites.
+      I love exploring new technologies and crafting experiences that surprise users. 
+      Let’s create something amazing together!
+    </p>
+  </section>
+
+  <script>
+    // Matrix background animation
+    const canvas = document.getElementById("matrix");
+    const ctx = canvas.getContext("2d");
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = "01<>[]{}#/*-+=JavaScriptHTMLCSSDATA";
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+    const drops = [];
+
+    for (let x = 0; x < columns; x++) drops[x] = 1;
+
+    function draw() {
+      ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = "#00ff95";
+      ctx.font = fontSize + "px Lucida Console";
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+    setInterval(draw, 33);
+
+    // Handle resizing
+    window.addEventListener("resize", () => {
+      canvas.height = window.innerHeight;
+      canvas.width = window.innerWidth;
+    });
+  </script>
+</body>
+</html>
